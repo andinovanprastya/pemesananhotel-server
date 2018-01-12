@@ -31,6 +31,7 @@ class Roomtype extends REST_Controller {
 		$data = array(
 			'roomtype_id' => $this->post('roomtype_id'),
 			'room_name' => $this->post('room_name'),
+			'stok' => $this->post('stok'),
 			'price' => $this->post('price'),
 		);
 		$insert = $this->db->insert('room_type', $data);
@@ -48,6 +49,7 @@ class Roomtype extends REST_Controller {
 		$data = array(
 			'roomtype_id' => $this->put('roomtype_id'),
 			'room_name' => $this->put('room_name'),
+			'stok' => $this->put('stok'),
 			'price' => $this->put('price'),
 			
 		);
