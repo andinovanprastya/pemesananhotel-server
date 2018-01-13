@@ -1,75 +1,82 @@
-<?php
-	Class Room extends CI_Controller{
-		var $API="";
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed');
 
-		function __construct(){
-			parent::__construct();
-			$this->API="http://localhost/pemesananhotel/index.php";
-			$this->load->library('session');
-			$this->load->library('curl');
-			$this->load->helper('form');
-			$this->load->helper('url');
+require APPPATH .'/libraries/REST_Controller.php';
+use Restserver\libraries\REST_Controller;
+
+
+class Room extends REST_Controller {
+
+	public function __construct($config = 'rest')
+	{
+		parent::__construct($config);
+		$this->load->database();
+	}
+
+	public function index_get()
+	{
+		$id = $this->get('room_id');
+		if ($id == '') {
+			$room = $this->db->get('room')->result();
+		} else {
+			$this->db->where('room_id', $id);
+			$room = $this->db->get('room')->result();
 		}
+		$this->response($room, 200);
+		
+	}
 
-		//Menampilkan data room
-		function index(){
-			$data['dataroom']=json_decode($this->curl->simple_get($this->API.'/room'));
-			$this->load->view('room/list',$data);
+	public function index_post()
+	{
+		$data = array(
+			'room_id' => $this->post('room_id'),
+			'roomtype_id' => $this->post('roomtype_id'),
+			'id_service' => $this->post('id_service'),
+			
+		);
+		$insert = $this->db->insert('room', $data);
+		if ($insert) {
+			$this->response($data, 200);
+		} else {
+			$this->response(array('status'=>'fail', 502));
 		}
+		
+	}
 
-		//insert data room
-		function create(){
-			if(isset($_POST['submit'])){
-				$data = array(
-				'id_room' => $this->input->post('id_room'),
-				'roomtype_id' => $this->input->post('roomtype_id'),
-				'id_service' => $this->input->post('id_service'));
-				$insert = $this->curl->simple_post($this->API.'/room',$data,array(CURLOPT_BUFFERSIZE =>10));
-				if($insert){
-					$this->session->set_flashdata('hasil','Insert Data Berhasil');
-				}else{
-					$this->session->set_flashdata('hasil','Insert Data Gagal');
-				}
-				redirect('room');
-			}else{
-				$this->load->view('room/create');
-			}
+	function index_put()
+	{
+		$id = $this->put('room_id');
+		$data = array(
+			'room_id' => $this->put('room_id'),
+			'roomtype_id' => $this->put('roomtype_id'),
+			'id_service' => $this->put('id_service'),
+			
+			
+		);
+		$this->db->where('room_id', $id);
+		$update = $this->db->update('room', $data);
+		if ($update) {
+			$this->response($data,200);
+		} else {
+			$this->response(array('status' => 'fail',502));
 		}
+		
+	}
 
-		//edit data room
-		function edit(){
-			if(isset($_POST['submit'])){
-				$data = array(
-				'id_room' => $this->input->post('id_room'),
-				'roomtype_id' => $this->input->post('roomtype_id'),
-				'id_service' => $this->input->post('id_service'));
-				$update = $this->curl->simple_put($this->API.'/room',$data,array(CURLOPT_BUFFERSIZE =>10));
-				if($update){
-					$this->session->set_flashdata('hasil','Update Data Berhasil');
-				}else{
-					$this->session->set_flashdata('hasil','UpdateData Gagal');
-				}
-				redirect('room','refresh');
-			}else{
-				$params = array('id_room'=> $this->uri->segment(3));
-				$data['dataroom'] = json_decode($this->curl->simple_get($this->API.'/room',$params));
-				$this->load->view('room/edit',$data);
-			}
-		}
-
-		//delete data room
-		function delete($id){
-			if(empty($id)){
-				rediret('room');
-			}else{
-				$delete = $this->curl->simple_delete($this->API.'/room',array('id_room'=>$id), array(CURLOPT_BUFFERSIZE => 10));
-				if($delete){
-					$this->session->set_flashdata('hasil','Delete Data Berhasil');
-				}else{
-					$this->session->set_flashdata('hasil','Delete Data Gagal');
-				}
-				redirect('room');
-			}
+	function index_delete()
+	{
+		$id=$this->delete('room_id');
+		$this->db->where('room_id', $id);
+		$delete = $this->db->delete('room');
+		if ($delete) {
+			$this->response(array('status' => 'success'),201);
+		} else {
+			$this->response(array('status' => 'fail',502));
 		}
 	}
-?>
+
+}
+
+/* End of file Kontak.php */
+/* Location: ./application/controllers/Kontak.php */
+ ?>
