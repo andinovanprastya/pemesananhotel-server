@@ -31,7 +31,7 @@ class Booking extends REST_Controller {
 		$data = array(
 			'id_booking' => $this->post('id_booking'),
 			'user_id' => $this->post('user_id'),
-			'room_id' => $this->post('room_id'),
+			'roomtype_id' => $this->post('roomtype_id'),
 			'booking_date' => $this->post('booking_date'),
 			'checkin' => $this->post('checkin'),
 			'checkout' => $this->post('checkout'),
@@ -53,7 +53,7 @@ class Booking extends REST_Controller {
 		$data = array(
 			'id_booking' => $this->put('id_booking'),
 			'user_id' => $this->put('user_id'),
-			'room_id' => $this->put('room_id'),
+			'roomtype_id' => $this->put('roomtype_id'),
 			'booking_date' => $this->put('booking_date'),
 			'checkin' => $this->put('checkin'),
 			'checkout' => $this->put('checkout'),

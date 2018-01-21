@@ -31,7 +31,7 @@ class Service extends REST_Controller {
 		$data = array(
 			'id_service' => $this->post('id_service'),
 			'service' => $this->post('service'),
-			// 'gambar' => $this->post('gambar'),
+			'gambar' => $this->post('gambar'),
 			'charge' => $this->post('charge'),
 		);
 		$insert = $this->db->insert('service', $data);
@@ -49,7 +49,7 @@ class Service extends REST_Controller {
 		$data = array(
 			'id_service' => $this->put('id_service'),
 			'service' => $this->put('service'),
-			// 'gambar' => $this->put('gambar'),
+			'gambar' => $this->put('gambar'),
 			'charge' => $this->put('charge'),
 			
 		);

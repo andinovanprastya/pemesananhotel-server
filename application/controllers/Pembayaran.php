@@ -33,7 +33,7 @@ class Pembayaran extends REST_Controller {
 			'id_booking' => $this->post('id_booking'),
 			'tgl_bayar' => $this->post('tgl_bayar'),
 			'total' => $this->post('total'),
-			'status' => $this->post('status'),
+			// 'status' => $this->post('status'),
 			
 		);
 		$insert = $this->db->insert('pembayaran', $data);
@@ -53,7 +53,7 @@ class Pembayaran extends REST_Controller {
 			'pembayarantype_id' => $this->put('pembayarantype_id'),
 			'tgl_bayar' => $this->put('tgl_bayar'),
 			'total' => $this->put('total'),
-			'status' => $this->put('status'),
+			// 'status' => $this->put('status'),
 			
 			
 		);
