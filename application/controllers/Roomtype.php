@@ -50,7 +50,7 @@ class Roomtype extends REST_Controller {
 		$data = array(
 			'roomtype_id' => $this->put('roomtype_id'),
 			'room_name' => $this->put('room_name'),
-			'gambar' => $this->post('gambar'),
+			'gambar' => $this->put('gambar'),
 			'stok' => $this->put('stok'),
 			'price' => $this->put('price'),
 			

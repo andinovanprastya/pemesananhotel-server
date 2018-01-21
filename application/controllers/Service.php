@@ -28,6 +28,7 @@ class Service extends REST_Controller {
 
 	public function index_post()
 	{
+
 		$data = array(
 			'id_service' => $this->post('id_service'),
 			'service' => $this->post('service'),
